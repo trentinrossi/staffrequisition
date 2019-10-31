@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/")
 public class VacancyInterceptor {
 
-    @PostMapping(path = "/vacancy")
+    @PostMapping(path = "/staffRequisition")
     public ResponseEntity<?> post(@RequestBody VacancyInput request) {         
         return ResponseEntity.badRequest().body("ErroRodrigo");
     }
