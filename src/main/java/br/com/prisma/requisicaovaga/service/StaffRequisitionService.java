@@ -19,6 +19,6 @@ public class StaffRequisitionService {
      */
     public void validateStaffRequisition(StaffRequisition staffRequisition, String token) {
         Employee e = employeeService.getEmployeeByEmployeeId(staffRequisition.getReplacedEmployeeId(), token);
-        System.out.println("Empoloyee: " + e);
+        System.out.println("Eployee: " + e);
     }
 }

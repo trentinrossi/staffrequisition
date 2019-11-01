@@ -58,7 +58,7 @@ public class PlatformService {
         //login();
 
         WebTarget target = getClientHcm();
-        String path = HCM_API_URL.concat(entity.concat(id));        
+        String path = entity.concat(id);        
         Invocation.Builder builder = target.path(path)
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, String.format(BEARER_TOKEN, token));
