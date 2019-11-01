@@ -25,7 +25,7 @@ public class PlatformService {
 
     // private static final String VACATION_MANAGEMENT_GETVACATIONPOLICYBYEMPLOYEE_QUERY_PATH = "/t/senior.com.br/bridge/1.0/rest/hcm/vacationmanagement/queries/getVacationPolicyByEmployee";
     // private static final String VACATION_MANAGEMENT_ENTITIES_PATH = "/t/senior.com.br/bridge/1.0/rest/hcm/vacationmanagement/entities/%s/%s";
-    private static final String HCM_API_URL = "https://hcm-api.senior.com.br/frontend-api/";   
+    private static final String HCM_API_URL = "https://hcm-api.senior.com.br/frontend-api/";
     private static final String LOGIN_WITH_KEY_PATH = "/t/senior.com.br/bridge/1.0/anonymous/rest/platform/authentication/actions/loginWithKey";
     private static final String BEARER_TOKEN = "Bearer %s";
 
@@ -77,9 +77,10 @@ public class PlatformService {
             LoginWithKeyOutput output = response.readEntity(LoginWithKeyOutput.class);
             try {
                 JsonToken jsonToken = new ObjectMapper().readValue(output.jsonToken, JsonToken.class);
+                System.out.println("Autenticado!: " + output.jsonToken);
                 this.token = Optional.of(jsonToken);
             } catch (IOException e) {
-                e.printStackTrace();
+                
             }
         }
     }
