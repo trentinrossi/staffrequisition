@@ -1,7 +1,6 @@
 package br.com.prisma.requisicaovaga.resource;
 
 import br.com.prisma.requisicaovaga.model.VacancyInput;
-import br.com.prisma.requisicaovaga.model.VacancyOutput;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ public class VacancyInterceptor {
 
     @PostMapping(path = "/createStaffRequisition")
     public ResponseEntity<?> post(@RequestBody VacancyInput request) {         
-        return ResponseEntity.badRequest().body("ErroRodrigo");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ErroRodrigo");
     }
 
     @ExceptionHandler(Exception.class)
