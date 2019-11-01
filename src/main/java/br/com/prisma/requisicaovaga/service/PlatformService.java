@@ -73,6 +73,7 @@ public class PlatformService {
             WebTarget target = getClient();
 
             Invocation.Builder builder = target.path(LOGIN_WITH_KEY_PATH).request(MediaType.APPLICATION_JSON);
+            System.out.println("Realizando autenticação...");
             Response response = builder.post(Entity.entity(loginWithKeyInput, MediaType.APPLICATION_JSON));
             LoginWithKeyOutput output = response.readEntity(LoginWithKeyOutput.class);
             try {
@@ -80,7 +81,7 @@ public class PlatformService {
                 System.out.println("Autenticado!: " + output.jsonToken);
                 this.token = Optional.of(jsonToken);
             } catch (IOException e) {
-                
+
             }
         }
     }

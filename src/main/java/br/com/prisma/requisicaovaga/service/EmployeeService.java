@@ -11,6 +11,7 @@ public class EmployeeService {
     PlatformService platform;
 
     public Employee getEmployeeByEmployeeId(String employeeId) {
+        System.out.println("Chamando getEmployeeByEmployeeId: " + employeeId);
         return platform.getEntity("employee/work-contract-situation/", employeeId, Employee.class);
     }
 }

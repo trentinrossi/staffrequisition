@@ -19,7 +19,7 @@ public class VacancyInterceptor {
 
     @Autowired
     StaffRequisitionService service;
-    
+
     @RequestMapping("/")
     public String index() {
         return "O aplicativo de customização das requisições de vagas está online!";
@@ -27,10 +27,10 @@ public class VacancyInterceptor {
 
     @PostMapping(path = "/createStaffRequisition")
     public ResponseEntity<?> post(@RequestBody StaffRequisition request) {
-        System.out.println(request);
+        System.out.println("Nova requisição: " + request);
 
         service.validateStaffRequisition(request);
-        
+
         return ResponseEntity.badRequest().body("ErroRodrigo");
     }
 
