@@ -27,7 +27,7 @@ public class VacancyInterceptor {
     }
 
     @PostMapping(path = "/createStaffRequisition")
-    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader("authorization") String authToken) {
+    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader(value = "authorization") String authToken) {
         System.out.println("Nova requisição: " + request);
 
         service.validateStaffRequisition(request, authToken);
