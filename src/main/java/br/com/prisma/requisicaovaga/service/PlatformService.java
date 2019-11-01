@@ -44,20 +44,26 @@ public class PlatformService {
 
     private Optional<JsonToken> token = Optional.empty();
 
-    private WebTarget getClient() {
+    private WebTarget getClientPlatform() {
         Client client = ClientBuilder.newClient();
         return client.target(PLATFORM_URL);
+    }
+
+    private WebTarget getClientHcm() {
+        Client client = ClientBuilder.newClient();
+        return client.target(HCM_API_URL);
     }
 
     public <T> T getEntity(String entity, String id, Class<T> tClass) {
         login();
 
-        WebTarget target = getClient();
-        String path = String.format(HCM_API_URL, entity, id);
+        WebTarget target = getClientHcm();
+        String path = HCM_API_URL.concat(entity.concat(id));        
         Invocation.Builder builder = target.path(path)
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, String.format(BEARER_TOKEN, token.get().getAccessToken()));
         try {
+            System.out.println("Tentando realizar a conexão com o HCM: " + path);
             return builder.get(tClass);
         } catch (NotFoundException e) {
             System.out.println("Erro ao realizar o retorno da entidade: " + e.getMessage());
@@ -77,7 +83,7 @@ public class PlatformService {
             loginWithKeyInput.accessKey = ACCESS_KEY;
             loginWithKeyInput.secret = SECRET;
 
-            WebTarget target = getClient();
+            WebTarget target = getClientPlatform();
 
             Invocation.Builder builder = target.path(LOGIN_WITH_KEY_PATH).request(MediaType.APPLICATION_JSON);
             System.out.println("Realizando autenticação...");
