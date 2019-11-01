@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class VacancyInterceptor {
 
     @PostMapping(path = "/createStaffRequisition")
-    public ResponseEntity<?> post(@RequestBody VacancyInput request) {         
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ErroRodrigo");
+    public ResponseEntity<?> post(@RequestBody VacancyInput request) {
+        System.out.println(request);              
+        
+        return ResponseEntity.badRequest().body("ErroRodrigo");
     }
 
     @ExceptionHandler(Exception.class)
