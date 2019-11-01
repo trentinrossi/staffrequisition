@@ -1,12 +1,14 @@
 package br.com.prisma.requisicaovaga.resource;
 
 import br.com.prisma.requisicaovaga.model.StaffRequisition;
+import br.com.prisma.requisicaovaga.service.StaffRequisitionService;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/")
 public class VacancyInterceptor {
 
+    @Autowired
+    StaffRequisitionService service;
+    
     @RequestMapping("/")
     public String index() {
         return "O aplicativo de customização das requisições de vagas está online!";
@@ -24,6 +29,8 @@ public class VacancyInterceptor {
     public ResponseEntity<?> post(@RequestBody StaffRequisition request) {
         System.out.println(request);
 
+        service.validateStaffRequisition(request);
+        
         return ResponseEntity.badRequest().body("ErroRodrigo");
     }
 
