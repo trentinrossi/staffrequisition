@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.ws.rs.NotFoundException;
 
 @Service
 public class PlatformService {
@@ -29,17 +30,17 @@ public class PlatformService {
     private static final String LOGIN_WITH_KEY_PATH = "/t/senior.com.br/bridge/1.0/anonymous/rest/platform/authentication/actions/loginWithKey";
     private static final String BEARER_TOKEN = "Bearer %s";
 
-    @Value("${PLATFORM_URL}")
-    private String PLATFORM_URL;
+    //@Value("${PLATFORM_URL}")
+    private String PLATFORM_URL = "https://platform.senior.com.br";
 
-    @Value("${TENANT}")
-    private String TENANT;
+    //@Value("${TENANT}")
+    private String TENANT = "larhom";
 
-    @Value("${ACCESS_KEY}")
-    private String ACCESS_KEY;
+    //@Value("${ACCESS_KEY}")
+    private String ACCESS_KEY = "8LyLHdZJMhTJHR713_Z2Fl1SfV4a";
 
-    @Value("${SECRET}")
-    private String SECRET;
+    //@Value("${SECRET}")
+    private String SECRET = "oiqz3Bv_RXKAWTNm4Qzj63tNdE8a";
 
     private Optional<JsonToken> token = Optional.empty();
 
@@ -56,7 +57,13 @@ public class PlatformService {
         Invocation.Builder builder = target.path(path)
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, String.format(BEARER_TOKEN, token.get().getAccessToken()));
-        return builder.get(tClass);
+        try {
+            return builder.get(tClass);
+        } catch (NotFoundException e) {
+            System.out.println("Erro ao realizar o retorno da entidade: " + e.getMessage());
+        }
+
+        return null;
     }
 
     /**
