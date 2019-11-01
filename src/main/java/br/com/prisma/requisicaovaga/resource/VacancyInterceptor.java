@@ -15,10 +15,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/")
 public class VacancyInterceptor {
 
+    @RequestMapping("/")
+    public String index() {
+        return "O aplicativo de customização das requisições de vagas está online!";
+    }
+
     @PostMapping(path = "/createStaffRequisition")
     public ResponseEntity<?> post(@RequestBody StaffRequisition request) {
-        System.out.println(request);              
-        
+        System.out.println(request);
+
         return ResponseEntity.badRequest().body("ErroRodrigo");
     }
 
