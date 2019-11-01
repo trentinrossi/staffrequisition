@@ -54,14 +54,14 @@ public class PlatformService {
         return client.target(HCM_API_URL);
     }
 
-    public <T> T getEntity(String entity, String id, Class<T> tClass) {
-        login();
+    public <T> T getEntity(String entity, String id, Class<T> tClass, String token) {
+        //login();
 
         WebTarget target = getClientHcm();
         String path = HCM_API_URL.concat(entity.concat(id));        
         Invocation.Builder builder = target.path(path)
                 .request(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, String.format(BEARER_TOKEN, token.get().getAccessToken()));
+                .header(HttpHeaders.AUTHORIZATION, String.format(BEARER_TOKEN, token));
         try {
             System.out.println("Tentando realizar a conexão com o HCM: " + path);
             return builder.get(tClass);

@@ -10,8 +10,8 @@ public class EmployeeService {
     @Inject
     PlatformService platform;
 
-    public Employee getEmployeeByEmployeeId(String employeeId) {
+    public Employee getEmployeeByEmployeeId(String employeeId, String token) {
         System.out.println("Chamando getEmployeeByEmployeeId: " + employeeId);
-        return platform.getEntity("employee/work-contract-situation/", employeeId, Employee.class);
+        return platform.getEntity("employee/work-contract-situation/", employeeId, Employee.class, token);
     }
 }

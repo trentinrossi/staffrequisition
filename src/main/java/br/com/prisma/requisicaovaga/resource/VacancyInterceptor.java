@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
@@ -26,10 +27,10 @@ public class VacancyInterceptor {
     }
 
     @PostMapping(path = "/createStaffRequisition")
-    public ResponseEntity<?> post(@RequestBody StaffRequisition request) {
+    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader("authorization") String authToken) {
         System.out.println("Nova requisição: " + request);
 
-        service.validateStaffRequisition(request);
+        service.validateStaffRequisition(request, authToken);
 
         return ResponseEntity.badRequest().body("ErroRodrigo");
     }
