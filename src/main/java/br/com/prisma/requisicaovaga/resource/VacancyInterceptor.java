@@ -27,9 +27,10 @@ public class VacancyInterceptor {
     }
 
     @PostMapping(path = "/createStaffRequisition")
-    public ResponseEntity<?> post(@RequestBody StaffRequisition request) {
+    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader(value = "Authorization") String token) {
         System.out.println("Nova requisição: " + request);
-
+        System.out.println("Token: " + token);
+        
         service.validateStaffRequisition(request);
 
         return ResponseEntity.badRequest().body("ErroRodrigo");

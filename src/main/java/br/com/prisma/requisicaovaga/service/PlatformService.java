@@ -63,10 +63,12 @@ public class PlatformService {
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, String.format(BEARER_TOKEN, token));
         try {
-            System.out.println("Tentando realizar a conexão com o HCM: " + path);
+            System.out.println("Tentando realizar a conexão com o HCM: " + target.toString());
             return builder.get(tClass);
         } catch (NotFoundException e) {
             System.out.println("Erro ao realizar o retorno da entidade: " + e.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Erro: "+ex.getMessage());
         }
 
         return null;
