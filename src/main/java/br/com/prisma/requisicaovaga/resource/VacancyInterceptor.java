@@ -24,31 +24,17 @@ public class VacancyInterceptor {
     }
 
     @PostMapping(path = "/createStaffRequisition")
-    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader Map<String, String> headers, @RequestHeader(value = "x-senior-token", required = false) String token) {
+    public ResponseEntity<?> post(@RequestBody StaffRequisition request,
+            @RequestHeader Map<String, String> headers,
+            @RequestHeader(value = "x-senior-token", required = false) String token) {
+
         System.out.println("Nova requisição: " + request);
-        System.out.println("Token: " + token);
 
-        headers.forEach((key, value) -> {
-            System.out.println(String.format("Header '%s' = %s", key, value));
-        });
-
+//        headers.forEach((key, value) -> {
+//            System.out.println(String.format("Header '%s' = %s", key, value));
+//        });
         service.validateStaffRequisition(request, token);
 
         return ResponseEntity.badRequest().body("ErroRodrigo");
     }
-//    @PostMapping(path = "/createStaffRequisition")
-//    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader (name="Authorization") String authToken) {
-//        System.out.println("Nova requisição: " + request);
-//
-//        service.validateStaffRequisition(request, authToken);
-//
-//        return ResponseEntity.badRequest().body("ErroRodrigo");
-//    }
-
-//    @ExceptionHandler(Exception.class)
-//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Error message")
-//    public Object handleError(HttpServletRequest req, Exception ex) {
-//        Object errorObject = new Object();
-//        return errorObject;
-//    }
 }

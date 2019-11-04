@@ -6,10 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import static javax.ws.rs.client.Entity.json;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,25 +15,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeService {
-
-    private static final String REST_URI = "https://hcm-api.senior.com.br/frontend-api/employee/work-contract-situation/";
-
-    private Client client = ClientBuilder.newClient();
-
-    @Inject
-    PlatformService platform;
-
-//    public Employee getEmployeeByEmployeeId(String employeeId, String token) {
-//        System.out.println("Chamando getEmployeeByEmployeeId: " + employeeId);
-//        return platform.getEntity("employee/work-contract-situation/", employeeId, Employee.class, token);
-//    }
+    private static final String SERVICE_URL = "employee/work-contract-situation/";
+    private final Client client = ClientBuilder.newClient();
 
     public Employee getEmployee(String employeeId, String token) {
         Employee emp = new Employee();
 
         Response response = client
-                .target(REST_URI)
-                .path(String.valueOf(employeeId))
+                .target(PlatformService.HCM_API_URL)
+                .path(SERVICE_URL)
+                .path(String.valueOf(employeeId))                
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .get();
@@ -56,6 +45,8 @@ public class EmployeeService {
                 emp.setSituation(jsonNode.get("employee").get("situation").asText());
 
             } catch (JsonProcessingException ex) {
+                Logger.getLogger(EmployeeService.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
                 Logger.getLogger(EmployeeService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

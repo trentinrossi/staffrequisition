@@ -24,11 +24,9 @@ import javax.ws.rs.NotFoundException;
 @Service
 public class PlatformService {
 
-    // private static final String VACATION_MANAGEMENT_GETVACATIONPOLICYBYEMPLOYEE_QUERY_PATH = "/t/senior.com.br/bridge/1.0/rest/hcm/vacationmanagement/queries/getVacationPolicyByEmployee";
-    // private static final String VACATION_MANAGEMENT_ENTITIES_PATH = "/t/senior.com.br/bridge/1.0/rest/hcm/vacationmanagement/entities/%s/%s";
-    private static final String HCM_API_URL = "https://hcm-api.senior.com.br/frontend-api/";
+    public static final String HCM_API_URL = "https://hcm-api.senior.com.br/frontend-api/";
+    public static final String PLATFORM_API_URL = "https://platform.senior.com.br/t/senior.com.br/bridge/1.0/rest/hcm/";
     private static final String LOGIN_WITH_KEY_PATH = "/t/senior.com.br/bridge/1.0/anonymous/rest/platform/authentication/actions/loginWithKey";
-    private static final String BEARER_TOKEN = "Bearer %s";
 
     //@Value("${PLATFORM_URL}")
     private String PLATFORM_URL = "https://platform.senior.com.br";
@@ -60,12 +58,11 @@ public class PlatformService {
         WebTarget target = getClientHcm();
         String path = entity.concat(id);        
         Invocation.Builder builder = target.path(path)
-                .request(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, token);                
+                .request(MediaType.APPLICATION_JSON)                
+                .header(HttpHeaders.AUTHORIZATION, token);  
         try {
             System.out.println("Tentando realizar a conexão com o HCM: " + target.getUri() + path);
-            //return builder.get(tClass);
-            
+            return builder.get(tClass);            
         } catch (NotFoundException e) {
             System.out.println("Erro ao realizar o retorno da entidade: " + e.getMessage());
         } catch (Exception ex) {
