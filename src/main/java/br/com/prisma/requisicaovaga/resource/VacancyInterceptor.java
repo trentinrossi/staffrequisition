@@ -2,17 +2,14 @@ package br.com.prisma.requisicaovaga.resource;
 
 import br.com.prisma.requisicaovaga.model.StaffRequisition;
 import br.com.prisma.requisicaovaga.service.StaffRequisitionService;
+import java.util.Map;
 import javax.inject.Inject;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
 @RequestMapping("/")
@@ -27,9 +24,13 @@ public class VacancyInterceptor {
     }
 
     @PostMapping(path = "/createStaffRequisition")
-    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader(value = "Authorization", required = false) String token) {
+    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader Map<String, String> headers, @RequestHeader(value = "Authorization", required = false) String token) {
         System.out.println("Nova requisição: " + request);
         System.out.println("Token: " + token);
+
+        headers.forEach((key, value) -> {
+            System.out.println(String.format("Header '%s' = %s", key, value));
+        });
 
         service.validateStaffRequisition(request);
 
