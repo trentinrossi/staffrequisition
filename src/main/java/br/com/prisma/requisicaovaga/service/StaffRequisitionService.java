@@ -18,7 +18,7 @@ public class StaffRequisitionService {
      * @param staffRequisition Payload da requisição da vaga
      */
     public void validateStaffRequisition(StaffRequisition staffRequisition, String token) {
-        Employee e = employeeService.getEmployeeByEmployeeId(staffRequisition.getReplacedEmployeeId(), token);
+        Employee e = employeeService.getEmployee(staffRequisition.getReplacedEmployeeId(), token);
         System.out.println("Eployee: " + e);
     }
 }

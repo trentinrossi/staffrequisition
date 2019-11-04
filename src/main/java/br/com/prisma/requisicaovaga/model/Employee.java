@@ -1,22 +1,36 @@
 package br.com.prisma.requisicaovaga.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@XmlRootElement(name = "employee")
 public class Employee {
 
+    @JsonProperty("employeeId")
     private String employeeId;
+
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("companyNumber")
     private String companyNumber;
+
+    @JsonProperty("employeeType")
     private String employeeType;
-    private String registerNumber;
+
+    @JsonProperty("registerNumber")
+    private int registerNumber;
+
+    @JsonProperty("situation")
     private String situation;
 
     public Employee() {
     }
 
-    public Employee(String employeeId, String name, String companyNumber, String employeeType, String registerNumber, String situation) {
+    public Employee(String employeeId, String name, String companyNumber, String employeeType, int registerNumber, String situation) {
         this.employeeId = employeeId;
         this.name = name;
         this.companyNumber = companyNumber;
@@ -57,11 +71,11 @@ public class Employee {
         this.employeeType = employeeType;
     }
 
-    public String getRegisterNumber() {
+    public int getRegisterNumber() {
         return registerNumber;
     }
 
-    public void setRegisterNumber(String registerNumber) {
+    public void setRegisterNumber(int registerNumber) {
         this.registerNumber = registerNumber;
     }
 

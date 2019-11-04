@@ -1,5 +1,6 @@
 package br.com.prisma.requisicaovaga.service;
 
+import br.com.prisma.requisicaovaga.model.Employee;
 import br.com.prisma.requisicaovaga.model.JsonToken;
 import br.com.prisma.requisicaovaga.model.LoginWithKeyInput;
 import br.com.prisma.requisicaovaga.model.LoginWithKeyOutput;
@@ -15,7 +16,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,10 +61,11 @@ public class PlatformService {
         String path = entity.concat(id);        
         Invocation.Builder builder = target.path(path)
                 .request(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, String.format(BEARER_TOKEN, token));
+                .header(HttpHeaders.AUTHORIZATION, token);                
         try {
-            System.out.println("Tentando realizar a conexão com o HCM: " + target.toString());
-            return builder.get(tClass);
+            System.out.println("Tentando realizar a conexão com o HCM: " + target.getUri() + path);
+            //return builder.get(tClass);
+            
         } catch (NotFoundException e) {
             System.out.println("Erro ao realizar o retorno da entidade: " + e.getMessage());
         } catch (Exception ex) {
