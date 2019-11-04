@@ -27,13 +27,21 @@ public class VacancyInterceptor {
     }
 
     @PostMapping(path = "/createStaffRequisition")
-    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader (name="Authorization") String authToken) {
+    public ResponseEntity<?> post(@RequestBody StaffRequisition request) {
         System.out.println("Nova requisição: " + request);
 
-        service.validateStaffRequisition(request, authToken);
+        service.validateStaffRequisition(request);
 
         return ResponseEntity.badRequest().body("ErroRodrigo");
     }
+//    @PostMapping(path = "/createStaffRequisition")
+//    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader (name="Authorization") String authToken) {
+//        System.out.println("Nova requisição: " + request);
+//
+//        service.validateStaffRequisition(request, authToken);
+//
+//        return ResponseEntity.badRequest().body("ErroRodrigo");
+//    }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Error message")

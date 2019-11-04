@@ -54,8 +54,8 @@ public class PlatformService {
         return client.target(HCM_API_URL);
     }
 
-    public <T> T getEntity(String entity, String id, Class<T> tClass, String token) {
-        //login();
+    public <T> T getEntity(String entity, String id, Class<T> tClass) {
+        login();
 
         WebTarget target = getClientHcm();
         String path = entity.concat(id);        
