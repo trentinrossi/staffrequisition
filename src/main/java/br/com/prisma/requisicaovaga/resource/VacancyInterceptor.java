@@ -32,7 +32,7 @@ public class VacancyInterceptor {
             System.out.println(String.format("Header '%s' = %s", key, value));
         });
 
-        service.validateStaffRequisition(request);
+        service.validateStaffRequisition(request, token);
 
         return ResponseEntity.badRequest().body("ErroRodrigo");
     }
