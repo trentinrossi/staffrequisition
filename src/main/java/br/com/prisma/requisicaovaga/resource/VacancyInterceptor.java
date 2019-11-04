@@ -27,7 +27,7 @@ public class VacancyInterceptor {
     }
 
     @PostMapping(path = "/createStaffRequisition")
-    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader(value = "Authorization") String token) {
+    public ResponseEntity<?> post(@RequestBody StaffRequisition request, @RequestHeader(value = "authorization") String token) {
         System.out.println("Nova requisição: " + request);
         System.out.println("Token: " + token);
         
