@@ -44,11 +44,11 @@ public class VacancyInterceptor {
 //        return ResponseEntity.badRequest().body("ErroRodrigo");
 //    }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Error message")
-    public Object handleError(HttpServletRequest req, Exception ex) {
-        Object errorObject = new Object();
-        return errorObject;
-    }
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Error message")
+//    public Object handleError(HttpServletRequest req, Exception ex) {
+//        Object errorObject = new Object();
+//        return errorObject;
+//    }
 
 }
