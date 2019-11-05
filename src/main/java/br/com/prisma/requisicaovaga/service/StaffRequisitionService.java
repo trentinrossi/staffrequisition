@@ -4,6 +4,7 @@ import br.com.prisma.requisicaovaga.model.Employee;
 import br.com.prisma.requisicaovaga.model.EmployeeSearchRecruitmentInput;
 import br.com.prisma.requisicaovaga.model.EmployeeSearchRecruitmentOutput;
 import br.com.prisma.requisicaovaga.model.StaffRequisition;
+import br.com.prisma.requisicaovaga.model.StaffRequisitionReason;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +26,19 @@ public class StaffRequisitionService {
      * HCM
      */
     public void validateStaffRequisition(StaffRequisition staffRequisition, String token) {
-        Employee e = employeeService.getEmployee(staffRequisition.getReplacedEmployeeId(), token);
 
-        EmployeeSearchRecruitmentInput input = new EmployeeSearchRecruitmentInput();
-        input.setQ(e.getName());
-        EmployeeSearchRecruitmentOutput output = recruitmentService.isExistsReferenceOfThisReplacedEmployeeOnVacancy(input, token);
+        if (staffRequisition.getReason() == StaffRequisitionReason.REPLACEMENT) {
+            Employee e = employeeService.getEmployee(staffRequisition.getReplacedEmployeeId(), token);
 
-        if (output.isExistsReferenceOfThisReplacedEmployeeOnVacancy() || output.isExistsReferenceOfThisReplacedEmployeeOnStaffRequisition()) {
-            System.out.println("Deve bloquear a requisição");
+            EmployeeSearchRecruitmentInput input = new EmployeeSearchRecruitmentInput();
+            input.setQ(e.getName());
+            EmployeeSearchRecruitmentOutput output = recruitmentService.isExistsReferenceOfThisReplacedEmployeeOnVacancy(input, token);
+
+            if (output.isExistsReferenceOfThisReplacedEmployeeOnVacancy() || output.isExistsReferenceOfThisReplacedEmployeeOnStaffRequisition()) {
+                System.out.println("Deve bloquear a requisição");
+            }
+
+            System.out.println("Eployee: " + e);
         }
-
-        System.out.println("Eployee: " + e);
     }
 }
