@@ -33,8 +33,10 @@ public class VacancyInterceptor {
 //        headers.forEach((key, value) -> {
 //            System.out.println(String.format("Header '%s' = %s", key, value));
 //        });
-        service.validateStaffRequisition(request, token);
-
-        return ResponseEntity.badRequest().body("ErroRodrigo");
+        if (service.isPresentInOthersRequisitions(request, token)) {
+            return ResponseEntity.badRequest().body("ErroRodrigo");
+        } else {
+            return ResponseEntity.ok().body(request);
+        }
     }
 }

@@ -18,6 +18,13 @@ public class EmployeeService {
     private static final String SERVICE_URL = "employee/work-contract-situation/";
     private final Client client = ClientBuilder.newClient();
 
+    /**
+     * Retorna os dados básicos de um colaborador, incluindo NumEmp, TipCol e NumCad
+     * 
+     * @param employeeId Id do colaborador ao qual se deseja obter as informações
+     * @param token Token do usuário logado para login no HCM
+     * @return Dados básicos de um colaborador, incluindo NumEmp, TipCol e NumCad
+     */
     public Employee getEmployee(String employeeId, String token) {
         Employee emp = new Employee();
 

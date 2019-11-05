@@ -19,7 +19,13 @@ public class RecruitmentService {
     private static final String SERVICE_URL = "/recruitment/queries/searchEmployees";
     private final Client client = ClientBuilder.newClient();
 
-    public EmployeeSearchRecruitmentOutput isExistsReferenceOfThisReplacedEmployeeOnVacancy(EmployeeSearchRecruitmentInput employeeSearch, String token) {
+    /**
+     * Método verifica se o colaborador já foi informado em outras requisições ou vagas
+     * @param employeeSearch Payload do colaborador 
+     * @param token Token para realizar o login no HCM
+     * @return Objeto com as informações true ou false se está vinculado a alguma vaga ou requisição
+     */
+    public EmployeeSearchRecruitmentOutput isExistsReferenceOfThisReplacedEmployee(EmployeeSearchRecruitmentInput employeeSearch, String token) {
         EmployeeSearchRecruitmentOutput out = new EmployeeSearchRecruitmentOutput();
 
         Response response = client

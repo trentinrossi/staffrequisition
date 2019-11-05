@@ -24,21 +24,25 @@ public class StaffRequisitionService {
      * @param staffRequisition Payload da requisição da vaga
      * @param token Token do usuário logado, necessário para realizar o login no
      * HCM
+     * @return true ou false se o colaborador já foi ou não vinculado a outras
+     * requisições ou vagas
      */
-    public void validateStaffRequisition(StaffRequisition staffRequisition, String token) {
+    public boolean isPresentInOthersRequisitions(StaffRequisition staffRequisition, String token) {
 
         if (staffRequisition.getReason() == StaffRequisitionReason.REPLACEMENT) {
             Employee e = employeeService.getEmployee(staffRequisition.getReplacedEmployeeId(), token);
 
             EmployeeSearchRecruitmentInput input = new EmployeeSearchRecruitmentInput();
             input.setQ(e.getName());
-            EmployeeSearchRecruitmentOutput output = recruitmentService.isExistsReferenceOfThisReplacedEmployeeOnVacancy(input, token);
+            EmployeeSearchRecruitmentOutput output = recruitmentService.isExistsReferenceOfThisReplacedEmployee(input, token);
 
             if (output.isExistsReferenceOfThisReplacedEmployeeOnVacancy() || output.isExistsReferenceOfThisReplacedEmployeeOnStaffRequisition()) {
-                System.out.println("Deve bloquear a requisição");
+                return true;
             }
 
             System.out.println("Eployee: " + e);
         }
+
+        return false;
     }
 }
