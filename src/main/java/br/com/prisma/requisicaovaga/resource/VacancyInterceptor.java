@@ -6,7 +6,8 @@ import br.com.prisma.requisicaovaga.service.StaffRequisitionService;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
-import javax.ws.rs.core.Request;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @RequestMapping("/")
 public class VacancyInterceptor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(VacancyInterceptor.class);
+
     @Inject
     StaffRequisitionService service;
 
     @RequestMapping("/")
     public String index() {
+        LOGGER.debug("Chamou REST /");
         return "O aplicativo de customização das requisições de vagas está online!";
     }
 
@@ -31,18 +35,19 @@ public class VacancyInterceptor {
             @RequestHeader Map<String, String> headers,
             @RequestHeader(value = "x-senior-token", required = false) String token) {
 
-        System.out.println("Nova requisição: " + request);
+        LOGGER.debug("Nova Requisição: " + request);
 
         StaffRequisition req = new StaffRequisition();
         req.setReason(StaffRequisitionReason.valueOf(request.get("reason")));
         req.setReplacedEmployeeId(request.get("replacedEmployeeId"));
         req.setActiveEmployeeId(request.get("activeEmployeeId"));
-        
-        System.out.println(req);
-        
-//        headers.forEach((key, value) -> {
-//            System.out.println(String.format("Header '%s' = %s", key, value));
-//        });
+
+        LOGGER.trace("StaffRequisition serializado:" + req);
+
+        headers.forEach((key, value) -> {
+            LOGGER.trace(String.format("Header '%s' = %s", key, value));
+        });
+
         try {
             if (service.isPresentInOthersRequisitions(req, token)) {
                 return ResponseEntity.badRequest().body("Colaborador já informado em outras requisições/vagas");
@@ -51,6 +56,6 @@ public class VacancyInterceptor {
             }
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
-        }        
+        }
     }
 }
