@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.ws.rs.NotFoundException;
-import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class PlatformService {
@@ -28,8 +27,8 @@ public class PlatformService {
     public static final String PLATFORM_API_URL = "https://platform.senior.com.br/t/senior.com.br/bridge/1.0/rest/hcm/";
     private static final String LOGIN_WITH_KEY_PATH = "/t/senior.com.br/bridge/1.0/anonymous/rest/platform/authentication/actions/loginWithKey";
 
-    @Value("${PLATFORM.URL}")
-    private String PLATFORM_URL;
+    //@Value("${PLATFORM_URL}")
+    private String PLATFORM_URL = "https://platform.senior.com.br";
 
     //@Value("${TENANT}")
     private String TENANT = "larhom";
