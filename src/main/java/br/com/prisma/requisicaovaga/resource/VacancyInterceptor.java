@@ -33,10 +33,15 @@ public class VacancyInterceptor {
 //        headers.forEach((key, value) -> {
 //            System.out.println(String.format("Header '%s' = %s", key, value));
 //        });
-        if (service.isPresentInOthersRequisitions(request, token)) {
-            return ResponseEntity.badRequest().body("ErroRodrigo");
-        } else {
-            return ResponseEntity.ok().body(request);
+        try {
+            if (service.isPresentInOthersRequisitions(request, token)) {
+                return ResponseEntity.badRequest().body("Colaborador já informado em outras requisições/vagas");
+            } else {
+                return ResponseEntity.ok().body(request);
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
         }
+
     }
 }

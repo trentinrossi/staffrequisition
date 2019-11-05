@@ -28,7 +28,7 @@ public class PlatformService {
     public static final String PLATFORM_API_URL = "https://platform.senior.com.br/t/senior.com.br/bridge/1.0/rest/hcm/";
     private static final String LOGIN_WITH_KEY_PATH = "/t/senior.com.br/bridge/1.0/anonymous/rest/platform/authentication/actions/loginWithKey";
 
-    @Value("${PLATFORM.URL}")
+    @Value("${PLATFORM_URL}")
     private String PLATFORM_URL;
 
     @Value("${TENANT}")

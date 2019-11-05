@@ -26,11 +26,16 @@ public class StaffRequisitionService {
      * HCM
      * @return true ou false se o colaborador já foi ou não vinculado a outras
      * requisições ou vagas
+     * @throws java.lang.Exception
      */
-    public boolean isPresentInOthersRequisitions(StaffRequisition staffRequisition, String token) {
+    public boolean isPresentInOthersRequisitions(StaffRequisition staffRequisition, String token) throws Exception {
 
         if (staffRequisition.getReason() == StaffRequisitionReason.REPLACEMENT) {
             Employee e = employeeService.getEmployee(staffRequisition.getReplacedEmployeeId(), token);
+
+            if (e == null) {
+                throw new Exception("Contrato do EmployeeId: " + staffRequisition.getReplacedEmployeeId() + " não encontrado no HCM.");
+            }
 
             EmployeeSearchRecruitmentInput input = new EmployeeSearchRecruitmentInput();
             input.setQ(e.getName());

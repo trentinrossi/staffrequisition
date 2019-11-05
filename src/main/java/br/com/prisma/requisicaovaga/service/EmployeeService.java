@@ -26,7 +26,7 @@ public class EmployeeService {
      * @return Dados básicos de um colaborador, incluindo NumEmp, TipCol e NumCad
      */
     public Employee getEmployee(String employeeId, String token) {
-        Employee emp = new Employee();
+        Employee emp = null;
 
         Response response = client
                 .target(PlatformService.HCM_API_URL)
@@ -44,6 +44,7 @@ public class EmployeeService {
 
             try {
                 JsonNode jsonNode = mapper.readTree(response.readEntity(String.class));
+                emp = new Employee();
                 emp.setEmployeeId(jsonNode.get("employee").get("employeeId").asText());
                 emp.setName(jsonNode.get("employee").get("name").asText());
                 emp.setCompanyNumber(jsonNode.get("employee").get("companyNumber").asText());
