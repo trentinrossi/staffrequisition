@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RecruitmentService {
 
-    private static final String SERVICE_URL = "/recruitment/queries/searchEmployees";
+    private static final String SERVICE_URL = "hcm/recruitment/queries/searchEmployees";
     private final Client client = ClientBuilder.newClient();
     private static final Logger LOGGER = LoggerFactory.getLogger(RecruitmentService.class);
 

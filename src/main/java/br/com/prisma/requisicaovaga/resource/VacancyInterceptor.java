@@ -2,6 +2,7 @@ package br.com.prisma.requisicaovaga.resource;
 
 import br.com.prisma.requisicaovaga.model.StaffRequisition;
 import br.com.prisma.requisicaovaga.model.StaffRequisitionReason;
+import br.com.prisma.requisicaovaga.service.NotificationService;
 import br.com.prisma.requisicaovaga.service.StaffRequisitionService;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,9 @@ public class VacancyInterceptor {
 
     @Inject
     StaffRequisitionService service;
+    
+    @Inject
+    NotificationService notificationService;
 
     @RequestMapping("/")
     public String index() {
@@ -49,7 +53,7 @@ public class VacancyInterceptor {
         });
 
         try {
-            if (service.isPresentInOthersRequisitions(req, token)) {
+            if (service.isPresentInOthersRequisitions(req, token)) {                
                 return ResponseEntity.badRequest().body("Colaborador já informado em outras requisições/vagas");
             } else {
                 return ResponseEntity.ok().body(request);

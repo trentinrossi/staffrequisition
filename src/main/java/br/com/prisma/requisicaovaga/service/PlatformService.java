@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 public class PlatformService {
 
     public static final String HCM_API_URL = "https://hcm-api.senior.com.br/frontend-api/";
-    public static final String PLATFORM_API_URL = "https://platform.senior.com.br/t/senior.com.br/bridge/1.0/rest/hcm/";
+    public static final String PLATFORM_API_URL = "https://platform.senior.com.br/t/senior.com.br/bridge/1.0/rest/";
     private static final String LOGIN_WITH_KEY_PATH = "/t/senior.com.br/bridge/1.0/anonymous/rest/platform/authentication/actions/loginWithKey";
 
     @Value("${PLATFORM_URL}")

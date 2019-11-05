@@ -3,6 +3,7 @@ package br.com.prisma.requisicaovaga.service;
 import br.com.prisma.requisicaovaga.model.Employee;
 import br.com.prisma.requisicaovaga.model.EmployeeSearchRecruitmentInput;
 import br.com.prisma.requisicaovaga.model.EmployeeSearchRecruitmentOutput;
+import br.com.prisma.requisicaovaga.model.NotifyUserInput;
 import br.com.prisma.requisicaovaga.model.StaffRequisition;
 import br.com.prisma.requisicaovaga.model.StaffRequisitionReason;
 import javax.inject.Inject;
@@ -20,6 +21,12 @@ public class StaffRequisitionService {
 
     @Inject
     RecruitmentService recruitmentService;
+
+    @Inject
+    NotificationService notificationService;
+    
+    @Inject
+    ObterMeusDadosService loggedUserService;
 
     /**
      * Método para validar se o colaborador informado na requisiçõe da vaga do
@@ -52,10 +59,27 @@ public class StaffRequisitionService {
 
             if (output.isExistsReferenceOfThisReplacedEmployeeOnVacancy() || output.isExistsReferenceOfThisReplacedEmployeeOnStaffRequisition()) {
                 LOGGER.debug("Colaborador já está vinculado a uma requisição ou vaga.");
+
+                String username = loggedUserService.returnUserLoggedWithDomain(token);
+                
+                NotifyUserInput notification = new NotifyUserInput();
+                notification.setDestinationUser(username);
+                notification.setNotificationClass("toast");
+                notification.setNotificationOrigin("Gestão do Recrutamento");
+                notification.setNotificationPriority("None");
+                notification.setNotificationKind("Operational");
+                notification.setNotificationSubject("Requisição de vaga");
+                notification.setNotificationContent("Requisição não pode ser aberta pois " + e.getName() + " já está associado(a) a outra Requisição/Vaga");
+                notification.setSourceDomain("hcm");
+                notification.setSourceService("recruitment");
+                notification.setLink("https://platform.senior.com.br/senior-x/#/Notifica%C3%A7%C3%B5es/0/all?category=notification&link=https%3A%2F%2Fplatform.senior.com.br%2Fnotifications-frontend%2F");
+
+                notificationService.notifyUser(notification, token);
+
                 return true;
             }
         }
-        
+
         LOGGER.debug("Colaborador não encontrado em nenhuma nenhuma requisição ou vaga anterior.");
         return false;
     }
